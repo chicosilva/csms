@@ -1,0 +1,78 @@
+{% extends "front.html" %}
+{% load front_extras %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+
+                <div class="ibox-content">
+
+                    <div class="panel-body col-lg-6">
+                        <div class="pull-right">
+                        <a href="{% url "front:codigos_promocionais" %}" class="label"> <span class="fa fa-bars fa-1x"> </span> Voltar para lista </a>
+                    </div>
+                       {% if form.non_field_errors %}
+                            <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                        {% endif %}
+
+                        {% if codigo_promo %}
+                            <form action="{% url "conteudo:editar_codigo_promocional" codigo_promo.pk %}" method="post" role="form">
+                        {% else %}
+                            <form action="{% url "conteudo:novo_codigo" %}" method="post" role="form">
+                        {% endif %}
+
+                            {% csrf_token %}
+                            <div class="form-group">
+
+                                <label>Descrição:</label> <span class="marca_texto_vermelho">(Obrigatório)</span>
+                                {{ form.descricao.errors }}
+                                {{ form.descricao|add_class:"form-control"|attr:"required:true" }}
+                            </div>
+
+                            <div class="form-group" id="data_1">
+                                <label>Validade:</label> <span class="marca_texto_vermelho">(Obrigatório)</span>
+                                <div class="input-group date"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+
+                                    {{ form.validade.errors }}
+                                    {{ form.validade|add_class:"form-control"|attr:"required:true"}}
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>Código:</label> <span class="marca_texto_vermelho">(Obrigatório)</span>
+                                {{ form.codigo.errors }}
+                                {{ form.codigo|add_class:"form-control codigo_t"|attr:"required:true"|attr:"placeholder:Exemplo: KEEPPROMO" }}
+                            </div>
+
+                            <div class="form-group">
+                                 <label>Texto:</label> <span class="marca_texto_vermelho">(Obrigatório)</span>
+                                {{ form.texto_codigo.errors }}
+                                {{ form.texto_codigo|add_class:"form-control"|attr:"rows:3" }}
+                            </div>
+
+                            <div class="form-group alert alert-warning">
+                                    Exemplo:  Apresente este SMS em nossa loja até domingo e ganhe 20% na compra de qualquer produto!”
+                            </div>
+
+                            <div class="form-group">
+                                <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit" name="salvar"
+                                        value="1" style="margin-left: 15px"><strong>Salvar</strong></button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

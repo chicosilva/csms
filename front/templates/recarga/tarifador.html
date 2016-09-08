@@ -1,0 +1,114 @@
+{% extends "front.html" %}
+{% load front_extras %}
+{% load bootstrap_pagination %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+
+                <div class="ibox-content">
+
+                </div>
+
+                <form method="get" action="{% url "financeiro:tarifador" %}">
+                    <div class="row">
+
+                        <div class="col-sm-2 m-b-xs">
+
+                            <select name="mes" class="input-sm form-control input-s-sm inline" style="float: left">
+                                <option value="{{ mes }}">Filtrar por Mês</option>
+                                {% for key,value in meses %}
+                                    <option value="{{ key }}" {% if mes == key %} selected="selected" {% endif %}  >{{ value }}</option>
+                                {% endfor %}
+                            </select>
+
+
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                        <span class="input-group-btn"><button type="submit" class="btn btn-sm btn-primary">Filtrar</button> </span>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+
+
+                <div class="table-responsive margem_table_lista" style="clear: both">
+
+                    {% if not mensagens %}
+
+                        <div class="alert alert-warning alert-dismissable">
+                            <i class="fa fa-warning"></i> Sua busca não encontrou nenhum resultado.
+                        </div>
+
+                    {% endif %}
+
+                    <div style="max-resolution: 20px; font-size: 14px; background: #F9F9F9; padding: 20px 10px">
+
+                        <strong>Mensagems enviadas:</strong> {{ total }}
+                        || <strong>Mensagems cobradas:</strong> {{ mensages_cobradas }}
+                        || <strong>Total cobrado:</strong> R$ {{ total_cobrado }}
+                    </div>
+
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+
+
+                            <th>Status</th>
+                            <th>Criada em:</th>
+                            <th>Valor Cobrado</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for mensagem in mensagens %}
+
+                            <tr>
+
+                                </td>
+
+                                <td>
+
+                                    {% if mensagem.data_agendamento %}
+                                        <span class="fa fa-clock-o fa-1x"> </span>
+                                        Agendada para<strong>
+                                        {{ mensagem.data_agendamento|date:"d/m/Y"}} às
+                                        {{ mensagem.data_agendamento|date:"H:i"}}</strong>
+                                        <br>
+                                        <a href="{% url "mensagem:cancelar_agendamento" mensagem.pk %}"> Cancelar
+                                            Agendamento</a>
+                                    {% else %}
+                                        <span class="label label-{{ mensagem.status.style }}">{{ mensagem.status|default:"Erro Desconhecido" }}</span>
+                                    {% endif %}
+
+                                </td>
+
+                                <td> {{ mensagem.data_pt }}</td>
+
+                                <td>
+                                    R$ {{ mensagem.valor|default:"0,00" }}
+                                </td>
+
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+
+                    {% bootstrap_paginate mensagens previous_label="Anterior" next_label="Seguinte" %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+
+{% endblock %}

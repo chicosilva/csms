@@ -1,0 +1,55 @@
+{% extends "front.html" %}
+{% load front_extras %}
+{% load bootstrap_pagination %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+                <div class="ibox-content">
+
+                    <div class="text-right">
+                        <a href="{% url "conteudo:novo_codigo" %}" class="btn btn-success"> Adicionar Código Promocional </a>
+                    </div>
+
+                    <div class="table-responsive margem_table_lista">
+
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Descrição</th>
+                                <th>Código</th>
+                                <th>Validade</th>
+                                <th>Enviar Exemplo de SMS</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for codigo_promo in codigos %}
+                                <tr>
+                                    <td><a href="{% url "conteudo:editar_codigo_promocional" codigo_promo.pk %}"
+                                           title="Clique para editar">{{ codigo_promo }}</a></td>
+                                    <td>{{ codigo_promo.codigo }}</td>
+                                    <td>{{ codigo_promo.validade }}</td>
+                                    <td>Enviar</td>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+{% endblock %}

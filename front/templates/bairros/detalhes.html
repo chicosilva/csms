@@ -1,0 +1,207 @@
+{% extends "front.html" %}
+{% load front_extras %}
+{% load widget_tweaks %}
+{% block content %}
+
+    <div class="row">
+
+        <div class="wrapper wrapper-content animated fadeInUp">
+            <div class="ibox">
+                <div class="ibox-content">
+
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <div class="row m-t-sm">
+                        <div class="col-lg-12">
+                            <div class="panel blank-panel">
+                                <div class="panel-heading">
+                                    <div class="panel-options">
+                                        <ul class="nav nav-tabs">
+
+                                            <li class="active">
+                                                <a href="#tab-1" data-toggle="tab" class="fa fa-envelope-o fa-1x">
+                                                    Enviar Mensagem </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#tab-2" data-toggle="tab">Últimas Mensagens</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="panel-body">
+                                    <div class="tab-content">
+
+                                        <div class="tab-pane active" id="tab-1">
+                                            <div class="chat-form">
+
+
+
+                                                <form role="form" method="post"
+                                                      action="{% url "localizacao:detalhes_bairro" bairro.pk %}"
+                                                      id="form_enviar_mensagem_usuario">
+                                                    {% csrf_token %}
+
+                                                    {% if form.non_field_errors %}
+                                                        <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                                                    {% endif %}
+
+                                                    <div class="form-group">
+                                                        <label>Tipo:</label> <span class="marca_texto_vermelho">(Obrigatório)</span>
+                                                        <a href="#" target="_blank"> Qual a diferença?</a>
+                                                        {{ form.tipo.errors }}
+                                                        {{ form.tipo|add_class:"form-control"|attr:"required:true" }}
+
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <select name="mensagem_padrao"
+                                                                class="input-sm form-control input-s-sm inline"
+                                                                id="id_set_mensagem_padrao">
+                                                            <option value="">Alguma mensagem padrão?</option>
+                                                            {% for mensagem in mensagens_padrao %}
+                                                                <option value="{{ mensagem.pk }}">{{ mensagem.nome }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group">
+
+                                                        {{ form.texto.errors }}
+                                                        {{ form.texto|add_class:"form-control"|attr:"rows:3" }}
+
+                                                    </div>
+
+                                                    <div class="form-group" id="data_1">
+
+                                                        <div class="input-group date">
+                                                            <span class="input-group-addon"><i
+                                                                    class="fa fa-calendar"></i></span>
+                                                            <input type="text" id="id_data_nascimento"
+                                                                   name="data_agendamento" class="form-control"
+                                                                   placeholder="Data para envio (opcional)"/>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>Hora para envio (Caso não informe será aplicado
+                                                            09:00):</label>
+                                                        <input type="time" placeholder="Hora para envio"
+                                                               name="hora_envio" class="form-control"/>
+                                                    </div>
+
+                                                    <div class="text-left">
+                                                        <button type="button" data-toggle="modal"
+                                                                data-target="#confirmar_envio"
+                                                                class="btn btn-sm btn-primary m-t-n-xs"><strong> Enviar
+                                                            mensagem</strong></button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane" id="tab-2">
+
+                                            <table class="table table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>Data</th>
+                                                    <th>Texto</th>
+                                                    <th>Relatório</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for mensagem in mensagens %}
+                                                    <tr>
+
+                                                        <td>
+                                                            {% if mensagem.data_agendamento %}
+                                                                <span class="fa fa-clock-o fa-1x"> </span>
+                                                                Agendada para<strong>
+                                                                {{ mensagem.data_agendamento|date:"d/m/Y"}} às {{ mensagem.data_agendamento|date:"H:i"}}</strong>
+                                                                <br>
+                                                                <a href="#" target="_blank"> Cancelar agendamento </a>
+                                                            {% else %}
+                                                                {{ mensagem.data_pt }}
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            <p class="small">
+                                                                {{ mensagem.texto }}
+                                                            </p>
+                                                            {% if mensagem.campanha %}
+                                                                <span style="color: #36BCA1"> {{ mensagem.campanha }} </span>
+                                                            {% endif %}
+                                                        </td>
+
+                                                        <td>
+                                                            <a href="#"> Ver relatório</a>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+
+                                                </tbody>
+                                            </table>
+                                            <div class="text-right">
+                                                <a href="{% url "front:index" %}?bairro_id={{ bairro.pk }}"
+                                                   class="btn btn-success"> Ver todas mensagens </a>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+
+                                </div>
+
+                                {% if cliente.cep %}
+                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15125.586292661685!2d-46.523482999999985!3d-18.60122425!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94aef548ff003cd9%3A0xb1eafe24688b9384!2s+{{ cliente.cep }}!5e0!3m2!1spt-BR!2sbr!4v1430659798870"
+                                            width="100%" height="450" frameborder="0" style="border:0"></iframe>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal inmodal" id="confirmar_envio" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content animated bounceInRight">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                                class="sr-only">Close</span></button>
+                        <i class="fa fa-envelope modal-icon"></i>
+                        <h4 class="modal-title">Confirme o Envio</h4>
+
+                    </div>
+                    <div class="modal-body">
+                        <p><span style="color: red"> O Processo de envio não pode ser cancelado. </span> Tem certeza que deseja enviar?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-primary" id="envia_mensagem">Sim, enviar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+
+            var mensagens = {};
+
+            {% for mensagem in mensagens_padrao %}
+                mensagens[{{ mensagem.pk }}] = "{{ mensagem.texto }}";
+            {% endfor %}
+
+        </script>
+
+    </div>
+
+{% endblock %}

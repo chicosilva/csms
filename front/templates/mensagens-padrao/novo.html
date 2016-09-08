@@ -1,0 +1,70 @@
+{% extends "front.html" %}
+{% load front_extras %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <script src="{{ STATIC_URL }}ckeditor/ckeditor.js"></script>
+    <script src="{{ STATIC_URL }}ckeditor/config.js"></script>
+
+    <style>
+        #id_texto_count{
+            display: none;
+        }
+    </style>
+
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+
+                <div class="ibox-content">
+
+                    <div class="panel-body col-lg-12">
+
+                        <div class="pull-right">
+                            <a href="{% url "front:msg_padrao" %}" class="label"> <span class="fa fa-bars fa-1x"> </span> Voltar para lista </a>
+                        </div>
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                        {% endif %}
+                        {% if mensagem %}
+                            <form action="{% url "mensagem:editar_msg_padrao" mensagem.pk %}" method="post" role="form" enctype="multipart/form-data">
+                        {% else %}
+                            <form action="{% url "mensagem:nova_msg_padrao" %}" method="post" role="form" enctype="multipart/form-data">
+                        {% endif %}
+
+                            {% csrf_token %}
+                            <div class="form-group">
+
+                                <label>Nome:</label> <span class="marca_texto_vermelho">(Obrigatório)</span>
+                                {{ form.nome.errors }}
+                                {{ form.nome|add_class:"form-control"|attr:"required:true" }}
+                            </div>
+
+
+
+                            <div class="form-group">
+                                 <label>Texto:</label> <span class="marca_texto_vermelho">(Obrigatório)</span>
+                                {{ form.texto.errors }}
+                                {{ form.texto|add_class:"form-control"|attr:"rows:3" }}
+                            </div>
+
+                            <div class="form-group">
+                                <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit" name="salvar"
+                                        value="1" style="margin-left: 15px"><strong>Salvar</strong></button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

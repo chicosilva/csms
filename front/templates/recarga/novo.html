@@ -1,0 +1,180 @@
+{% extends "front.html" %}
+{% load front_extras %}
+{% load widget_tweaks %}
+
+{% block bar_top %}{% endblock %}
+{% block info_creditos %}{% endblock %}
+{% block zopin %}{% endblock %}
+
+{% block menu_left %}
+
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear"> <span class="block m-t-xs"> <strong
+                                    class="font-bold">{{ cliente.nome }}</strong>
+                             </span> <span class="text-muted text-xs block"> <b
+                                    class="caret"></b></span> </span> </a>
+                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                            <li><a href="{{ cliente.url }}{% url "autenticacao:sair" %}">Sair</a></li>
+                        </ul>
+                    </div>
+                    <div class="logo-element">
+                        Keep
+                    </div>
+                </li>
+
+                <li id="menu_mensagens">
+                    <a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">Mensagens</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse out" aria-expanded="false">
+                        <li><a href="{{ cliente.url }}{% url "front:index" %}">Lista de Mensagens</a></li>
+                        <li><a href="{{ cliente.url }}{% url "mensagem:exemplos" %}">Exemplos de mensagens</a></li>
+
+                        <li><a href="{{ cliente.url }}{% url "front:msg_padrao" %}">Mensagens Padrão</a></li>
+                        <li><a href="{{ cliente.url }}{% url "financeiro:tarifador" %}">Tarifador</a></li>
+                        <li><a href="{{ cliente.url }}{% url "financeiro:recargas" %}">Recarga</a></li>
+                    </ul>
+                </li>
+
+                <li id="menu_clientes">
+                    <a href="#"><i class="fa fa-user"></i> <span class="nav-label">Meus Clientes</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse out" aria-expanded="false">
+                        <li><a href="{{ cliente.url }}{% url "front:clientes" %}">Lista de Clientes</a></li>
+                        <li><a href="{{ cliente.url }}{% url "front:bairros" %}">Bairros</a></li>
+                        <li><a href="{{ cliente.url }}{% url "front:categorias" %}">Categorias</a></li>
+                        <li><a href="{{ cliente.url }}{% url "cadastro:numeros_invalidos" %}">Números Inválidos</a></li>
+                        <li><a href="{{ cliente.url }}{% url "cadastro:importar_planilha" %}">Importar Planilha</a></li>
+                    </ul>
+                </li>
+
+                <li id="menu_conteudo">
+                    <a href="#"><i class="fa fa-share-alt-square"></i> <span class="nav-label">Conteúdo</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse out" aria-expanded="false">
+                        <li><a href="{{ cliente.url }}{% url "front:noticias" %}">Notícias</a></li>
+                        <li><a href="{{ cliente.url }}{% url "front:codigos_promocionais" %}">Códigos promocionais</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li id="menu_config">
+                    <a href="{{ cliente.url }}{% url "autenticacao:configuracoes" %}"><i class="fa fa-cogs"></i> <span
+                            class="nav-label">Configurações</span><span
+                            class="fa arrow"></span></a>
+                </li>
+
+                <li id="menu_faq">
+                    <a href="{{ cliente.url }}{% url "mensagem:faq" %}"><i class="fa fa-comments"></i> <span
+                            class="nav-label">Perguntas Frequentes</span><span
+                            class="fa arrow"></span></a>
+                </li>
+                <li id="menu_config">
+                    <a href="{{ cliente.url }}{% url "autenticacao:configuracoes" %}"><i class="fa fa-info"></i> <span
+                            class="nav-label">Termos de Uso</span><span
+                            class="fa arrow"></span></a>
+                </li>
+
+            </ul>
+
+        </div>
+    </nav>
+
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+
+                <div class="ibox-content">
+
+                    <div class="panel-body col-lg-6">
+                        <div class="pull-right">
+                            <a href="{% url "financeiro:recargas" %}" class="label"> <span
+                                    class="fa fa-bars fa-1x"> </span> Voltar para lista </a>
+                        </div>
+
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-danger">{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                        {% endif %}
+
+
+                        {% if not saldo_positivo %}
+                            <form action="{{ url_recarga }}{% url "financeiro:recarga" %}" method="post" role="form">
+
+                                <input name="status" value="1" type="hidden"/>
+                                <input name="codigo_cliente" value="{{ codigo }}" type="hidden"/>
+
+                                {% csrf_token %}
+
+                                <div class="form-group">
+
+                                    <label>Escolha o valor da recarga:</label>
+                                    {{ form.valor.errors }}
+                                    {{ form.valor|add_class:"form-control"|attr:"required:true" }}
+                                </div>
+
+                                <div class="form-group">
+                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit" name="salvar"
+                                            value="1" style="margin-left: 15px"><strong>Próximo »</strong></button>
+
+                                </div>
+
+                            </form>
+                        {% endif %}
+
+                        <div class="table-responsive margem_table_lista" style="clear: both; padding-top: 10px">
+
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+
+                                    <th>Recarregue:</th>
+                                    <th>Alcance:</th>
+                                    <th>Valor SMS</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                {% for valor in valores %}
+
+                                    <tr>
+                                        <td>R$ {{ valor.valor }}</td>
+                                        <td>Para impactar <strong> {{ valor.total_envios }} </strong> pessoas</td>
+                                        <td>R$ {{ valor.valor_sms }}</td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        #id_valor_counter {
+            display: none;
+        }
+    </style>
+{% endblock %}

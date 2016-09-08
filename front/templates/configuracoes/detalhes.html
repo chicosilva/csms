@@ -1,0 +1,228 @@
+{% extends "front.html" %}
+{% load front_extras %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+
+                 {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="ibox-content">
+
+                    <div class="panel-body col-lg-12">
+
+                        <div class="panel blank-panel">
+                            <div class="panel-heading">
+                                <div class="panel-options">
+                                    <ul class="nav nav-tabs">
+
+                                        <li class="active">
+                                            <a href="#tab-1" data-toggle="tab"> Configurações Gerais </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="#tab-2" data-toggle="tab">Assinatura do SMS</a>
+                                        </li>
+
+                                         <li>
+                                            <a href="#tab-3" data-toggle="tab">Alterar Senha</a>
+                                        </li>
+
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="tab-content">
+
+                                    <div class="tab-pane active" id="tab-1">
+                                        <div class="chat-form">
+
+                                            {% if form.non_field_errors %}
+                                                <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                                            {% endif %}
+
+                                            <form action="{% url "autenticacao:configuracoes" %}" method="post" role="form">
+                                                {% csrf_token %}
+
+                                                <input type="hidden" name="assinatura_sms" value="{{ configuracao.assinatura_sms }}">
+
+                                                <div class="form-group">
+
+                                                    <label>Nome da Empresa:</label>
+                                                    {{ form.nome.errors }}
+                                                    {{ form.nome|add_class:"form-control"|attr:"required:true"  }}
+                                                </div>
+
+                                                <div class="form-group">
+
+                                                    <label>Responsável:</label>
+                                                    {{ form.responsavel.errors }}
+                                                    {{ form.responsavel|add_class:"form-control"|attr:"required:true"  }}
+                                                </div>
+
+                                                <div class="form-group">
+
+                                                    <label>Celular:</label>
+                                                    {{ form.celular.errors }}
+                                                    {{ form.celular|add_class:"form-control"|attr:"required:true" }}
+                                                </div>
+
+
+                                                <div class="form-group">
+
+                                                    <label>Telefone:</label>
+                                                    {{ form.telefone.errors }}
+                                                    {{ form.telefone|add_class:"form-control"|attr:"required:true" }}
+                                                </div>
+
+                                                <div class="form-group">
+
+                                                    <label>e-mail:</label>
+                                                    {{ form.email.errors }}
+                                                    {{ form.email|add_class:"form-control"|attr:"required:true" }}
+                                                </div>
+
+                                                <div class="form-group">
+
+                                                    <label>CEP:</label>
+                                                    {{ form.cep.errors }}
+                                                    {{ form.cep|add_class:"form-control" }}
+                                                    <a class="lbuscacep"
+                                                       href="http://www.buscacep.correios.com.br/servicos/dnec/menuAction.do?Metodo=menuEndereco"
+                                                       target="_blank">Não sabe o CEP? Consulte aqui!</a>
+                                                </div>
+
+                                                <div class="form-group">
+
+                                                    <label>Endereço:</label>
+                                                    {{ form.endereco.errors }}
+                                                    Exemplo: Rua Espírito Santo, 55, Cristo Redentor, Patos de Minas - MG
+                                                    {{ form.endereco|add_class:"form-control" }}
+
+                                                </div>
+
+
+                                                <div class="form-group">
+
+                                                    <label>Site:</label>
+                                                    {{ form.site.errors }}
+                                                    Exemplo: www.meusite.com
+                                                    {{ form.site|add_class:"form-control" }}
+
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs"
+                                                            type="submit"
+                                                            name="salvar" value="1" style="margin-left: 15px">
+                                                        <strong>Salvar</strong></button>
+
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane" id="tab-2">
+
+                                        {% if form.non_field_errors %}
+                                            <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                                        {% endif %}
+
+                                        <form action="{% url "autenticacao:configuracoes" %}" method="post" role="form">
+                                                {% csrf_token %}
+
+                                                <input type="hidden" name="nome" value="{{ configuracao.nome }}">
+                                                <input type="hidden" name="responsavel" value="{{ configuracao.responsavel }}">
+                                                <input type="hidden" name="email" value="{{ configuracao.email }}">
+                                                <input type="hidden" name="telefone" value="{{ configuracao.telefone }}">
+                                                <input type="hidden" name="celular" value="{{ configuracao.celular }}">
+                                                <input type="hidden" name="cep" value="{{ configuracao.cep }}">
+                                                <input type="hidden" name="endereco" value="{{ configuracao.endereco }}">
+
+                                                <div class="form-group">
+
+                                                    <label>Assinatura do SMS:</label>
+                                                    {{ form.assinatura_sms.errors }}
+                                                    {{ form.assinatura_sms|add_class:"form-control"|attr:"required:true" }}
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs"
+                                                            type="submit"
+                                                            name="salvar" value="1" style="margin-left: 15px">
+                                                        <strong>Salvar</strong></button>
+
+                                                </div>
+
+                                            </form>
+
+                                    </div>
+
+                                    <div class="tab-pane" id="tab-3">
+
+                                        {% if form_senha.non_field_errors %}
+                                            <div class="alert alert-danger">{{ form_senha.non_field_errors }}</div>
+                                        {% endif %}
+
+                                        <form action="{% url "autenticacao:editar_senha" %}" method="post" role="form">
+                                                {% csrf_token %}
+
+                                                <div class="form-group">
+
+                                                    <label>Senha Atual:</label>
+                                                    {{ form_senha.senha_atual.errors }}
+                                                    {{ form_senha.senha_atual|add_class:"form-control"|attr:"required:true" }}
+                                                </div>
+
+                                                <div class="form-group">
+
+                                                    <label>Nova Senha:</label>
+                                                    {{ form_senha.senha.errors }}
+                                                    {{ form_senha.senha|add_class:"form-control"|attr:"required:true" }}
+                                                </div>
+
+                                                <div class="form-group">
+
+                                                    <label>Confirme a Nova Senha:</label>
+                                                    {{ form_senha.confirme.errors }}
+                                                    {{ form_senha.confirme|add_class:"form-control"|attr:"required:true" }}
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs"
+                                                            type="submit"
+                                                            name="salvar" value="1" style="margin-left: 15px">
+                                                        <strong>Salvar</strong></button>
+
+                                                </div>
+
+                                            </form>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

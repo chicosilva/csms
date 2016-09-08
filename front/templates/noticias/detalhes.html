@@ -1,0 +1,137 @@
+{% extends "front.html" %}
+{% load front_extras %}
+{% load widget_tweaks %}
+{% load thumbnail %}
+{% block menu_left %}
+
+    <nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold" style="color: #fff;">{{ configuracao.nome }}</strong></span>
+                </div>
+                <div class="logo-element">
+                    Keep
+                </div>
+            </li>
+
+        </ul>
+
+    </div>
+</nav>
+
+{% endblock %}
+
+{% block bar_top %}{% endblock %}
+{% block info_creditos %}{% endblock %}
+{% block zopin %}{% endblock %}
+
+{% block rodape %}
+    <div class="footer" style="clear: both">
+        <div class="pull-right">
+            <strong>{{ configuracao.nome }}</strong>
+        </div>
+        <div>
+            <a href="#" class="enviar_denuncia"><strong style="color:red"> <span class="fa fa-exclamation-circle fa-1x"> </span> Denunciar Abuso</strong></a>
+            <span class="load_envio"></span>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block meta_tags %}
+
+    <meta content="{{ noticia.title }}" name="description"/>
+    <meta content="{{ configuracao.nome }}" name="generator"/>
+
+    <meta content="article" property="og:type"/>
+    <meta content="pt_BR" property="og:locale"/>
+
+    <meta content="{{ noticia.url }}" property="og:url"/>
+
+    <meta content="{{ configuracao.nome }}" property="og:site_name"/>
+
+{#    <meta content="http://patoshoje.com.br/media/cache/f4/89/f48957f69360b3f6f114899bef620404.jpg" property="og:image"/>#}
+
+    <meta content="{{ noticia.title }}" property="og:description"/>
+    <meta content="{{ configuracao.nome }}" property="og:title"/>
+    <meta content="1489049374719115" property="fb:page_id"/>
+{#    <meta content="http://patoshoje.com.br/static/imgs/logofb.png" itemprop="image"/>#}
+    <link href="http://www.site.com.br/" rel="canonical"/>
+{% endblock %}
+
+{% block content %}
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-55569334142b5be2" async="async"></script>
+
+    <div class="row">
+
+        <div class="wrapper wrapper-content animated fadeInUp">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <div class="texto_noticia">
+                        {{ noticia.texto|safe }}
+                        <input id="noticia_id" value="{{ noticia.pk }}" type="hidden" />
+
+                    </div>
+                    {% if imagens %}
+                        <br>
+                        <h3>Clique na imagem para ampliar:</h3>
+                        <div class="popup-gallery">
+                        {% for image in imagens %}
+                            {% thumbnail image.image "100x80" crop="center" as im %}
+
+                                {% thumbnail image.image "500x500" crop="center" as imbig %}
+                                    <a href="{{ imbig.url }}">
+                                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="imagem_album" />
+                                    </a>
+                                {% endthumbnail %}
+
+                            {% endthumbnail %}
+                        {% endfor %}
+                        </div>
+
+                    {% endif %}
+
+                    <div style="padding: 20px 0">
+                        <a href="tel:{{ configuracao.telefone }}" class="btn btn-white btn-bitbucket">
+                            <i class="fa fa-phone"></i> {{ configuracao.telefone }}
+                        </a>
+                        <a href="tel:{{ configuracao.celular }}" class="btn btn-white btn-bitbucket">
+                            <i class="fa fa-mobile-phone"></i> {{ configuracao.celular }}
+                        </a>
+
+                        <a href="whatsapp://" class="btn btn-white btn-bitbucket">
+                            <i class="fa fa-mobile-phone"></i> Whatsapp
+                        </a>
+
+                        {% if configuracao.site %}
+                            <a href="http://{{ configuracao.site }}" class="btn btn-white btn-bitbucket">
+                                <i class="fa fa-link"></i> {{ configuracao.site }}
+                            </a>
+                        {% endif %}
+
+                        <a href="{% url "conteudo:mapa" %}" class="btn btn-white btn-bitbucket">
+                            <i class="fa fa-link"></i> Localização
+                        </a>
+                         <a href="mailto:{{ configuracao.email }}" class="btn btn-white btn-bitbucket">
+                            <i class="fa fa-envelope"></i> {{ configuracao.email }}
+                        </a>
+                    </div>
+
+                    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+                    <div class="addthis_sharing_toolbox"></div>
+                    <a href="whatsapp://{{ noticia.url }}?text={{ noticia.title }}" data-action="share/whatsapp/share">
+                        <img src="{{ STATIC_URL }}img/whatsapp.png" />
+                    </a>
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+{% endblock %}

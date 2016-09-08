@@ -1,0 +1,48 @@
+{% extends "front.html" %}
+{% load front_extras %}
+{% load bootstrap_pagination %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+                <div class="ibox-content">
+
+                    <div class="text-right">
+                        <a href="{% url "mensagem:nova_msg_padrao" %}" class="btn btn-success"> Adicionar Mensagem Padrão </a>
+                    </div>
+
+                    <div class="table-responsive margem_table_lista">
+
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Nome</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for mensagem in mensagens %}
+                                <tr>
+                                    <td><a href="{% url "mensagem:editar_msg_padrao" mensagem.pk %}" title="Clique para editar">{{ mensagem }}</a></td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+{% endblock %}

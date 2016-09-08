@@ -1,0 +1,111 @@
+{% extends "front.html" %}
+{% load front_extras %}
+{% load widget_tweaks %}
+
+{% block bar_top %}{% endblock %}
+{% block info_creditos %}{% endblock %}
+{% block zopin %}{% endblock %}
+
+{% block menu_left %}
+
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear"> <span class="block m-t-xs"> <strong
+                                    class="font-bold">{{ cliente.nome }}</strong>
+                             </span> <span class="text-muted text-xs block"> <b
+                                    class="caret"></b></span> </span> </a>
+                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                            <li><a href="{{ cliente.url }}{% url "autenticacao:sair" %}">Sair</a></li>
+                        </ul>
+                    </div>
+                    <div class="logo-element">
+                        Keep
+                    </div>
+                </li>
+
+                <li id="menu_mensagens">
+                    <a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">Mensagens</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse out" aria-expanded="false">
+                        <li><a href="{{ cliente.url }}{% url "front:index" %}">Lista de Mensagens</a></li>
+                        <li><a href="{{ cliente.url }}{% url "mensagem:exemplos" %}">Exemplos de mensagens</a></li>
+
+                        <li><a href="{{ cliente.url }}{% url "front:msg_padrao" %}">Mensagens Padrão</a></li>
+                        <li><a href="{{ cliente.url }}{% url "financeiro:tarifador" %}">Tarifador</a></li>
+                        <li><a href="{{ cliente.url }}{% url "financeiro:recargas" %}">Recarga</a></li>
+                    </ul>
+                </li>
+
+                <li id="menu_clientes">
+                    <a href="#"><i class="fa fa-user"></i> <span class="nav-label">Meus Clientes</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse out" aria-expanded="false">
+                        <li><a href="{{ cliente.url }}{% url "front:clientes" %}">Lista de Clientes</a></li>
+                        <li><a href="{{ cliente.url }}{% url "front:bairros" %}">Bairros</a></li>
+                        <li><a href="{{ cliente.url }}{% url "front:categorias" %}">Categorias</a></li>
+                        <li><a href="{{ cliente.url }}{% url "cadastro:numeros_invalidos" %}">Números Inválidos</a></li>
+                        <li><a href="{{ cliente.url }}{% url "cadastro:importar_planilha" %}">Importar Planilha</a></li>
+                    </ul>
+                </li>
+
+                <li id="menu_conteudo">
+                    <a href="#"><i class="fa fa-share-alt-square"></i> <span class="nav-label">Conteúdo</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse out" aria-expanded="false">
+                        <li><a href="{{ cliente.url }}{% url "front:noticias" %}">Notícias</a></li>
+                        <li><a href="{{ cliente.url }}{% url "front:codigos_promocionais" %}">Códigos promocionais</a></li>
+                    </ul>
+                </li>
+
+                <li id="menu_config">
+                    <a href="{{ cliente.url }}{% url "autenticacao:configuracoes" %}"><i class="fa fa-cogs"></i> <span class="nav-label">Configurações</span><span
+                            class="fa arrow"></span></a>
+                </li>
+
+                <li id="menu_faq">
+                    <a href="{{ cliente.url }}{% url "mensagem:faq" %}"><i class="fa fa-comments"></i> <span class="nav-label">Perguntas Frequentes</span><span
+                            class="fa arrow"></span></a>
+                </li>
+                <li id="menu_config">
+                    <a href="{{ cliente.url }}{% url "autenticacao:configuracoes" %}"><i class="fa fa-info"></i> <span class="nav-label">Termos de Uso</span><span
+                            class="fa arrow"></span></a>
+                </li>
+
+            </ul>
+
+        </div>
+    </nav>
+
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+
+                <div class="ibox-content">
+                    <div class="alert alert-warning alert-dismissable">
+                        <i class="fa fa-warning"></i> Efetue o pagamento com o PagSeguro. Importante: Pagamentos com boleto compensam após 2 dias.
+                    </div>
+
+                    Valor: R$ {{ recarga.valor }}
+                    <br>
+                    <a href="{{ redirect_url }}">
+                        <img src="{{ STATIC_URL }}img/209x48-comprar-assina.gif">
+                    </a>
+                    
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    </div>
+
+{% endblock %}

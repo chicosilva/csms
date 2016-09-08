@@ -1,0 +1,254 @@
+{% extends "front.html" %}
+{% load front_extras %}
+{% load widget_tweaks %}
+
+{% block configuracao_assinatura_sms %}{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="ibox-content">
+
+                    <div class="panel-body col-lg-12">
+
+                        <div>
+
+                            <h3>INSTRUMENTO PARTICULAR DE PRESTAÇÃO DE SERVIÇO PARA CAMPANHAS DE MENSAGENS CURTAS DE
+                                TEXTO (SMS) DE MARKETING E SMS CORPORATIVOS.</h3>
+
+                            <strong>(A) Keep Sistemas. </strong> , inscrita no CNPJ sob o no 22.643.234/0001-90,
+                            com sede na Rua Espirito Santo, 733, Bairro Cristo Redentor, Patos de Minas-MG, CEP 38700-254, neste ato, representadas por seu representante legal abaixo
+                            assinado, doravante simplesmente denominada (“CONTRATADA”);
+                            <br><br>
+
+                            E de outro lado:
+                            <strong>(B) {{ configuracao.nome }}</strong>, no Documento {{ user.cnpj|default:"" }} {{ user.cpf|default:"" }},
+                            com sede {{ configuracao.endereco }}, CEP {{ configuracao.cep }}, neste ato, representada por seus responsáveis
+                            legais abaixo subscritos, doravante simplesmente denominado (“CLIENTE”);
+
+                            <br><br>
+
+                            <strong>Considerando que:</strong>
+
+                            <br><br>
+                            1. As Partes desejam estabelecer o regramento e as condições necessárias para os
+                            serviços de Tráfego de mensagens com conteúdo de marketing veiculado mediante
+                            SMS por meio de plataforma da contratada;
+                            2. Tal plataforma será disponibilizada para o gerenciamento do tráfego de SMS para
+                            CAMPANHAS DE MARKETING junto às operadoras de telefonia CLARO, TIM, NEXTEL,
+                            VIVO e OI;
+
+                            <br><br>
+                            3. As Operadoras fazem imposições e restrições à CONTRATADA, e as Partes no âmbito
+                            de suas obrigações e direitos concordam em se ajustar a tais situações;
+                            4. Sujeito aos termos e condições aqui estabelecidos as Partes se comprometem em
+                            realizar todos os atos necessários para a celebração e o cumprimento do presente
+                            INSTRUMENTO PARTICULAR DE PRESTAÇÃO DE SERVIÇO PARA CAMPANHAS DE
+                            MENSAGENS CURTAS DE TEXTO (SMS) DE MARKETING (“CONTRATO”).
+
+                            <br><br>
+                            <strong>OBRIGAÇÕES</strong>
+                            <br><br>
+                            O CLIENTE obriga-se a:
+                            a) Zelar pelos dados informados, usuários cadastrados na
+                            plataforma, bem como pelas informações dispostas no SMS, as quais deverão conter o devido
+                            registro do nome da marca do CLIENTE, para clara identificação das mensagens de SMS.
+                            <br><br>
+                            b) Obter dos seus USUÁRIOS o OPT-IN para o tráfego de SMS, isentando integralmente a
+                            CONTRATADA de eventuais responsabilidades com os USUÁRIOS. Para tanto, o CLIENTE deverá
+                            manter a cópia das autorizações dos USUÁRIOS das mensagens trafegadas.
+
+                            <br><br>
+                            c) É obrigatório o aceite expresso e inequívoco mediante OPT-IN do USUÁRIO
+                            para o recebimento de Campanhas de Marketing, sempre que as campanhas
+                            envolverem o envio de disparos de SMS Marketing para uma listagem própria de
+                            USUÁRIOS, sob pena de responsabilização integral e exclusiva do CLIENTE, nos
+                            termos da legislação aplicável;
+
+                            <br><br>
+
+                            d) A cada 7 (sete) dias, um determinado USUÁRIO poderá ser impactado com
+                            no máximo 5 (cinco) DISPAROS de mensagens da Marca do CLIENTE,
+                            direcionadas a uma BASE de Usuários na qual ele fez OPT-IN
+
+                            <br><br>
+                            e) Cabe salientar que somente é permitido o envio de SMS de CAMPANHAS
+                            DE MARKETING no período de 09h00min até 21h00min, de acordo com
+                            determinação do MEF e ANATEL. Os demais SMS que não entrarem nesta
+                            janela de disparos deverão aguardar a janela de disparos seguinte.
+
+                            Evidencia-se que, a CONTRATADA reserva-se o direito de incluir,
+                            excluir ou modificar regras e processos de cancelamento, visando
+                            sempre ter mais assertividade para o CLIENTE e proteger a privacidade
+                            do USUÁRIO, evitando abusos
+
+
+                            <br><br>
+
+                            f) Quando o SMS fizer referência a sorteios ou concursos de qualquer
+                            espécie, gratuitos ou não, é responsabilidade exclusiva do CLIENTE submeter o
+                            sorteio ou concurso para aprovação na Caixa Econômica Federal e/ou demais órgãos
+                            competentes, apresentando posteriormente, para a CONTRATADA a documentação
+                            de autorização e validação do sorteio ou concurso cujo irá ser divulgado através do
+                            SMS Marketing.
+
+                            <br>
+
+                            E quando o serviço for exclusivamente utilizado para envio de SMS Corporativo não
+                            enviar mensagens de SMS Marketing com conotação publicitária, com conteúdo
+                            promocional ou ainda de propaganda de produtos ou serviços de qualquer natureza que
+                            demonstrem preferência por alguma empresa, site ou marca.
+
+
+                            <br><br>
+                            <strong>Não trafegar SMS:</strong>
+
+                            <br><br>
+
+                            - com conteúdo eleitoral ou político de qualquer natureza;
+                            <br>
+
+                            - que faça citação, menção ou referência às Operadoras e/ou empresas cuja atividade
+                            social seja similar à exercida pelas Operadoras;
+
+                            <br>
+
+                            - que violem o direito de propriedade intelectual, industrial ou direitos autorais de
+                            Terceiros;
+
+                            <br>
+
+
+                            - SMS com divulgação de qualquer tipo de ideologias, incluindo, mas não se limitando a,
+                            motivações políticas, canais de notícias, religiosas.
+
+
+                            <br><br>
+
+                            <strong>Responsabilidade pelo Conteúdo</strong>
+
+                            <br>
+                            <br>
+
+                            Cliente é o único e exclusivo responsável pelo
+                            conteúdo dos textos das mensagens enviadas, obrigando-se a garantir que os conteúdos
+                            trafegados não violarão e nem causarão exposição indevida ou constrangimento dos
+                            destinatários, respondendo ainda por seu conteúdo em juízo ou fora dele, e eximindo a
+                            CONTRATADA em caráter incondicional de quaisquer responsabilidades por quaisquer
+                            Reclamações.
+
+                            <br><br>
+                            <strong>A CONTRATADA obriga-se:</strong>
+                            <br><br>
+
+                            (a) Manter sigilo e confidencialidade absolutos sobre as informações confidenciais a que
+                            tiver
+                            acesso, sendo expressamente vedada a sua utilização para outros fins que não os consignados
+                            neste Contrato.
+                            <br><br>
+                            (b) Disponibilizar, via Plataforma, relatórios e informações referentes às mensagens SMS
+                            trafegadas pelo Cliente;
+                            <br><br>
+
+                            (c) Disponibilizar relatórios e informações referentes às mensagens de Campanhas de
+                            Marketing trafegadas pelo CLIENTE;
+
+                            <br><br>
+
+
+                            <strong> LIMITAÇÕES TÉCNICAS:</strong>
+
+                            <br><br>
+                            O cliente compromete-se a:
+                            <br><br>
+                            (a) Isentar de responsabilidades a CONTRATADA por eventual interrupção parcial ou total dos
+                            serviços por indisponibilidade ou obstrução dos serviços das Operadoras;
+                            <br><br>
+                            (b) Providenciar os meios para sua conexão via internet.
+                            <br><br>
+
+                            <strong>VIGÊNCIA</strong>
+
+                            <br><br>
+                            Este Contrato tem prazo de vigência indeterminado, podendo ser rescindido pelas Partes, a
+                            qualquer
+
+                            <br><br>
+                            <strong> DA CONFIDENCIALIDADE E DO SIGILO</strong>
+
+                            <br><br>
+
+
+                            As Partes se obrigam a respeitar a confidencialidade dos dados e informações que a outra
+                            Parte repasse para o cumprimento do presente Contrato, durante vigência e após a rescisão,
+                            bem como de tudo a que se refira ao serviço ora contratado ou à sua execução. Em caso de
+                            violação desta obrigação por qualquer uma das Partes ou por qualquer de seus colaboradores,
+                            a outra Parte estará legitimada a reclamar e exigir, conforme a legislação aplicável, a
+                            correspondente indenização por todos os danos e prejuízos ocasionados
+
+                            <br><br>
+                            <strong> DECLARAÇÕES DAS PARTES </strong>
+
+                            <br><br>
+                            As partes declaram estar cientes de que quaisquer multas aplicadas por parte das
+                            Operadoras serão repassadas às Partes no âmbito de suas responsabilidades, assim como
+                            comprovadamente constatar a respectiva culpa de cada Parte.
+
+                            <br><br>
+                            Na ocorrência de alteração de caráter mandatório por parte das Operadoras no preço
+                            dos SMS, automaticamente as Partes comprometem-se a se adequar ao novo valor
+                            estabelecido sendo este repassado ao CLIENTE.
+                            <br><br> As Partes declaram para todos os efeitos que são inteiramente independentes, uma
+                            vez
+                            que a presente contratação não cria vínculos empregatícios, previdenciários ou quaisquer
+                            outros de cunho social e/ou empresarial, devendo as disposições deste Contrato ser
+                            interpretadas de forma a não (a) criar qualquer espécie de associação, parceria e/ou joint
+                            venture entre as Partes, e muito menos (b) autorizar qualquer das Partes a atuar como
+                            representante da outra, ou ainda (c) vincular a outra de forma diversa de qualquer modo
+                            (inclusive, entre outros, fazendo qualquer declaração ou garantia, assumindo qualquer
+                            obrigação ou responsabilidade e exercendo qualquer direito ou poder.
+
+
+                        </div>
+
+                        {% if not configuracao.aceitou_termos %}
+
+                        <br><br><br>
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                        {% endif %}
+
+                        <form action="{% url "autenticacao:termos" %}" method="post" role="form">
+                            {% csrf_token %}
+
+                            <div class="form-group">
+                                {{ form.termos.errors }}
+                                {{ form.termos|attr:"required:true"  }}
+                                <button class="btn btn-sm btn-primary  m-t-n-xs"
+                                        type="submit"
+                                        name="salvar" value="1" style="margin-left: 15px">
+                                    <strong>Li e aceito todos os termos</strong></button>
+
+                            </div>
+
+                        </form>
+
+                    {% endif %}
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

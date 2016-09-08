@@ -1,0 +1,76 @@
+{% extends "front.html" %}
+{% load front_extras %}
+{% load bootstrap_pagination %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+                <div class="ibox-content">
+                    {% if not saldo_positivo %}
+                        <div class="text-right">
+                            <a href="{% url "financeiro:recarga" %}" class="btn btn-success"> Nova Recarga </a>
+                        </div>
+                    {% endif %}
+                    <div class="table-responsive margem_table_lista">
+
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+
+                                <th>Código</th>
+                                <th>Valor</th>
+                                <th>Status</th>
+                                <th>Data</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for recarga in recargas %}
+
+                                <tr>
+
+                                    <td>
+
+                                        {% if codigo == 1 %}
+                                            Recarga {{ recarga.pk }} - para cliente {{ recarga.codigo_cliente }}
+                                        {% else %}
+                                            pi{{ recarga.recarga_id }}-cli{{ recarga.pk }}
+                                        {% endif %}
+
+                                    </td>
+                                    <td>R$ {{ recarga.valor }}</td>
+                                    <td>
+
+                                        {% if recarga.status.pk == 1 %}
+                                            <span class="label label-warning">{{ recarga.status }}</span>
+
+                                        {% else %}
+                                            <span class="label label-primary">{{ recarga.status }}</span>
+                                        {% endif %}
+
+
+                                    </td>
+                                    <td>{{ recarga.data_pt }}</td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+{% endblock %}
